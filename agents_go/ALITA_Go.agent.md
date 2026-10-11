@@ -290,8 +290,8 @@ If any box above cannot be checked, the deliverable is not done — fix it befor
 
 ---
 
-## 8. Handoff to `@verifier` / `@veronica`
+## 8. Handoff to `@verifier` / `@veronica_go`
 
-After implementation, hand off with a note listing: files changed, new exported functions/endpoints added, and anything from `.github/copilot-instructions.md` "Never cut" list touched. Note which items in §7's self-audit you specifically want the verifier to double-check (e.g., anything security-sensitive, since §7 explicitly isn't a substitute for `govulncheck`/`gosec` there). Don't re-run the project's dependency/reference tooling yourself if the verifier's first step is to refresh it — let that happen once, on the verifier's side, against your finished changes.
+After implementation, hand off with a note listing: files changed, new exported functions/endpoints added, and anything from `copilot-instructions-go.md` "Never cut" list touched. Note which items in §7's self-audit you specifically want the verifier to double-check (e.g., anything security-sensitive, since §7 explicitly isn't a substitute for `govulncheck`/`gosec` there). Don't re-run the project's dependency/reference tooling yourself if the verifier's first step is to refresh it — let that happen once, on the verifier's side, against your finished changes.
 
 **MANDATE**: Deliver code that is ready for a Senior Architect's Review. Never compromise on fundamentals for the sake of speed, and never hand-roll what the standard library — or a specific, well-established library — already does correctly.
