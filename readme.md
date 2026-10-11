@@ -2,10 +2,14 @@
 
 Welcome to the Copilot AI Prompts repository. This repository organizes specialized GitHub Copilot instructions modularized by language and framework ecosystem:
 
-* **`agents_java/`**: Instructions for Java and Spring Boot 3+ (Architect, JUnit Test Specialist, Code Reviewer).
-* **`agents_go/`**: Instructions for Go / Golang systems engineering (Principal Go Systems Architect, with additional Go agents planned).
-
-By using these instructions, you transform standard GitHub Copilot from a "generic code autocomplete" tool into a Principal Architect, an SDET, and a strict Code Reviewer.
+* **`agents_java/`**: Specialized instructions for Java and Spring Boot 3+ development:
+  * **Alita**: Principal Spring Boot Architect (Feature implementation & design patterns)
+  * **Veronica**: Senior SDET & JUnit Specialist (High-coverage JUnit 5 & AssertJ suites)
+  * **Themis**: Strict Code Reviewer & Gatekeeper (SOLID, OWASP security, proxy & JPA correctness)
+  * **Aegis**: Security Remediation Engineer (Automated Fortify vulnerability fixing & Maven BOM resolution)
+  * **Pythia**: Codebase Investigator (Read-only dependency tracing & architectural research)
+* **`agents_go/`**: Instructions for Go / Golang systems engineering:
+  * **ALITA_Go**: Principal Go Systems Architect (Idiomatic Go, stdlib-first, concurrency safety)
 
 ---
 
@@ -14,11 +18,16 @@ By using these instructions, you transform standard GitHub Copilot from a "gener
 ```text
 .
 ├── agents_java/
-│   ├── spring-architect.md        # Principal Spring Boot 3+ Architect
-│   ├── junit-instructions.md      # Expert JUnit 5 & AssertJ Test Engineer
-│   └── spring-code-reviewer.md    # Strict Spring Boot Code Reviewer
+│   ├── Aegis.agent.md             # Security Remediation & Fortify Auto-Fix
+│   ├── Alita.agent.md             # Principal Spring Boot 3+ Architect
+│   ├── Pythia.agent.md            # Codebase Investigation & Research (Read-Only)
+│   ├── Themis.agent.md            # Strict Spring Boot Code Reviewer & Gatekeeper
+│   └── Veronica.agent.md          # Senior SDET / JUnit 5 & Mockito Specialist
 ├── agents_go/
 │   └── ALITA_Go.md                # Principal Go Systems Architect
+├── scripts/
+│   └── fod_vulnerability_extractor.py # FoD SAST/SCA Vulnerability Extraction CLI
+├── copilot-instructions.md        # Global Engineering Defaults & Agent Hand-off Chain
 └── readme.md
 ```
 
@@ -26,45 +35,74 @@ By using these instructions, you transform standard GitHub Copilot from a "gener
 
 ## ☕ Java & Spring Boot Agents (`agents_java/`)
 
-### 🛠️ 1. The Spring Architect (For Writing Code)
-**File:** `agents_java/spring-architect.md`
+### 🏗️ 1. Alita (Principal Spring Boot Architect)
+**File:** `agents_java/Alita.agent.md`
 
-This is your Principal Engineer pair-programmer. It focuses heavily on design patterns, DRY/KISS principles, and decomposing large classes.
+Your Principal Engineer pair-programmer. Enforces SOLID principles, Library-First mandates, DRY/KISS architecture, and decomposes complex classes into clean, production-grade Spring Boot 3.x components.
 
 * **When to use it:**
-  * Starting a new feature from scratch (e.g., building a new Service or Controller).
-  * Refactoring a messy, existing class.
-  * When you need to split a "God Class" into smaller, SRP-compliant components.
-* **How to invoke:** Open Copilot Chat and tag the file.
-  > `@workspace #file:agents_java/spring-architect.md I need to implement a new StripePaymentService. It should take a PaymentRequest record and process it securely. Please build the service.`
+  * Building a new feature or service from scratch.
+  * Refactoring legacy classes or splitting "God Classes".
+  * Implementing clean controller -> service -> repository domain boundaries.
+* **How to invoke:**
+  > `@workspace #file:agents_java/Alita.agent.md I need to implement a new StripePaymentService. It should take a PaymentRequest record and process it securely. Please build the service.`
 
 ---
 
-### 🧪 2. The JUnit Specialist (For Writing Tests)
-**File:** `agents_java/junit-instructions.md`
+### 🧪 2. Veronica (Senior SDET / JUnit Specialist)
+**File:** `agents_java/Veronica.agent.md`
 
-This is your SDET (Software Development Engineer in Test). It does not write lazy tests. It forces high coverage, edge-case handling, and strict mocking boundaries.
+Your dedicated Software Development Engineer in Test. Generates defensible, edge-case resilient unit test suites using JUnit 5, Mockito, and AssertJ. Enforces strict mock boundaries and anti-overmocking plausibility gates.
 
 * **When to use it:**
-  * Immediately after writing a new Service or Controller.
-  * When modifying legacy code and you need to build a test harness first.
-  * When trying to increase your Jacoco test coverage.
-* **How to invoke:** Open the class you want to test, open Copilot Chat, and tag the file.
-  > `Review the open file. #file:agents_java/junit-instructions.md Please generate a comprehensive JUnit 5 test suite for this service. Ensure you test negative inputs and null values.`
+  * Generating test coverage immediately after writing a new service or controller.
+  * Building test harnesses for legacy code before refactoring.
+  * Testing edge cases, boundary values, and negative exception branches.
+* **How to invoke:**
+  > `Review the open file. #file:agents_java/Veronica.agent.md Please generate a comprehensive JUnit 5 test suite for this service. Ensure you test negative inputs and null values.`
 
 ---
 
-### 🕵️‍♂️ 3. The Spring Code Reviewer (For PRs & Sanity Checks)
-**File:** `agents_java/spring-code-reviewer.md`
+### 🕵️‍♂️ 3. Themis (Strict Code Reviewer & Gatekeeper)
+**File:** `agents_java/Themis.agent.md`
 
-This is your strict gatekeeper. It acts like a Senior Reviewer looking for architectural flaws, security risks, and performance bottlenecks (like N+1 queries) before you merge your code.
+Your strict quality gatekeeper. Reviews diffs and classes against SOLID standards, OWASP-aligned security vulnerabilities, N+1 JPA query performance, Spring proxy/self-invocation pitfalls, and configuration leaks.
 
 * **When to use it:**
-  * Right before opening a Pull Request.
-  * When reviewing a teammate's PR and you want an automated "second pair of eyes."
-  * When you've finished a complex refactoring and want to ensure you didn't break SOLID rules.
-* **How to invoke:** Select the code you just wrote (or open the git diff), open Copilot Chat, and tag the file.
-  > `@workspace #file:agents_java/spring-code-reviewer.md Please perform a strict code review on my latest changes. Flag any field injections or missing exception handling.`
+  * Prior to opening a Pull Request.
+  * Performing automated sanity reviews on a teammate's PR.
+  * Verifying architectural integrity after major refactorings.
+* **How to invoke:**
+  > `@workspace #file:agents_java/Themis.agent.md Please perform a strict code review on my latest changes. Flag any field injections, unhandled exceptions, or proxy bypasses.`
+
+---
+
+### 🛡️ 4. Aegis (Fortify Security Remediation Engineer)
+**File:** `agents_java/Aegis.agent.md`
+
+Specialized in automated Fortify on Demand (FoD) SAST/SCA security discovery and remediation. Diagnoses vulnerable Maven dependencies and applies patches using a strict top-down BOM property hierarchy.
+
+* **When to use it:**
+  * Triaging and remediating Fortify/FoD vulnerability reports (`pom_updates_for_copilot.json`).
+  * Resolving transitive dependency CVEs safely via Maven BOM properties.
+  * Remediating code-level findings (Path Traversal, SQLi, CRLF Log Forging).
+* **Companion CLI Script:** [`scripts/fod_vulnerability_extractor.py`](file:///c:/Users/srvar/Desktop/switch/Spring_Projects/Copilot_Agents_Java/scripts/fod_vulnerability_extractor.py) (automates FoD REST API token retrieval, vulnerability filtering, and JSON dataset generation).
+* **How to invoke:**
+  > `@workspace #file:agents_java/Aegis.agent.md Please analyze the High severity dependencies from pom_updates_for_copilot.json and update pom.xml following the strict dependency hierarchy.`
+
+---
+
+### 🔍 5. Pythia (Codebase Investigator & Research)
+**File:** `agents_java/Pythia.agent.md`
+
+A strictly read-only investigator agent. Explores codebases, traces dependency trees, verifies call paths, and checks authentication/cascade impacts before preparing a structured handoff note for Alita.
+
+* **When to use it:**
+  * Investigating "where is X implemented" or "what calls Y".
+  * Scoping cascades and security gates prior to destructive or mutation changes.
+  * Performing preliminary architecture investigations without risk of modifying files.
+* **How to invoke:**
+  > `@workspace #file:agents_java/Pythia.agent.md Where is the order processing workflow initiated, and what services handle payments downstream?`
 
 ---
 
@@ -73,35 +111,28 @@ This is your strict gatekeeper. It acts like a Senior Reviewer looking for archi
 ### 🏗️ 1. ALITA_Go (Principal Go Systems Architect)
 **File:** `agents_go/ALITA_Go.md`
 
-This is your Principal Software Engineer and Systems Architect for Go backend systems. It enforces idiomatic Go, standard-library-first architecture, composition over inheritance, strict concurrency safety (goroutine leak prevention, nil-interface traps, channel deadlock guards), and table-driven testing.
+Principal Systems Architect for Go backend systems. Enforces idiomatic Go, standard-library-first architecture, composition over inheritance, strict concurrency safety (goroutine leak prevention, nil-interface traps, channel deadlock guards), and table-driven testing.
 
 * **When to use it:**
   * Designing and developing production-grade Go services, REST APIs, or CLI tools.
   * Refactoring Go packages into clean layers (`Handler` -> `Service` -> `Store`) with consumer-defined interfaces.
   * Conducting pre-flight architectural audits for concurrency, memory allocation, and error-wrapping compliance (`%w`).
-* **How to invoke:** Open Copilot Chat and tag the file.
+* **How to invoke:**
   > `@workspace #file:agents_go/ALITA_Go.md I need to implement a user authentication service in Go with standard library HTTP routing and context cancellation. Please design and build the service.`
-
-*(Note: Additional specialized Go agents, such as test specialists and automated code reviewers, are planned for this directory).*
 
 ---
 
-## 🚀 Recommended Workflows
+## 🚀 Recommended Agent Chains & Workflows
 
-### ☕ Spring Boot Workflow
-
-To get the most out of these tools, use them in sequence during your daily development:
-
-1. **Build:** Use `#file:agents_java/spring-architect.md` to generate clean, SOLID-compliant service and controller skeletons.
-2. **Refine:** Write the domain business logic and configure dependencies via constructor injection.
-3. **Test:** Open the target class and invoke `#file:agents_java/junit-instructions.md` to produce comprehensive, edge-case JUnit 5 and AssertJ suites.
-4. **Review:** Highlight changes and use `#file:agents_java/spring-code-reviewer.md` to run an iron-clad pre-PR review (checking for N+1 queries, OWASP issues, and config leaks).
-5. **Push:** Merge clean, tested, and validated code.
+### ☕ Spring Boot Team Chain
+1. **Investigate (`@pythia`):** Scope required changes, trace dependencies, check cascades, and produce a structured handoff note.
+2. **Build (`@alita`):** Receive handoff note and implement clean, library-first, SOLID Spring Boot services and controllers.
+3. **Test (`@veronica`):** Generate complete, parameterized JUnit 5 + Mockito test suites covering all positive and negative branches.
+4. **Review (`@themis`):** Run an automated pre-PR review gate to verify zero architectural, concurrency, or security defects.
+5. **Security Audit (`@aegis`):** Automate Fortify vulnerability scanning and resolve vulnerable transitive dependencies via BOM properties.
 
 ### 🐹 Go / Golang Workflow
-
 1. **Design & Stdlib Scan:** Invoke `#file:agents_go/ALITA_Go.md` to plan package boundaries, verify standard library coverage (`net/http`, `log/slog`, `database/sql`), and establish consumer interfaces.
 2. **Implement:** Write idiomatic Go with explicit error checking (`%w`), context propagation, and fail-fast startup configs.
 3. **Audit & Test:** Use ALITA_Go's Ironclad Pre-Flight Self-Audit to verify zero goroutine leaks, nil-interface safety, and generate table-driven unit tests.
 4. **Push:** Commit idiomatic, production-ready Go code.
-
